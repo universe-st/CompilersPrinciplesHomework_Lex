@@ -1,0 +1,15 @@
+if(a==2) then{
+	a=a+1;
+}
+
+if(b!=2) then{
+	b=b+1;
+}
+real c = 3.1415;
+int d = 6;
+real e = 3.14e-102;
+while(1){
+	if(a<=b+c){
+		b+=c;
+	}
+}
