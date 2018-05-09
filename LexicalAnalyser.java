@@ -10,6 +10,7 @@ public class LexicalAnalyser {
 
     public static List<String> srcFilePathList;
 
+    private static String seperator = "======================================================================";
     static {
         srcFilePathList = new ArrayList<>();
     }
@@ -62,13 +63,19 @@ public class LexicalAnalyser {
             File srcFile = new File(src);
             String fileName = srcFile.getName();
             fileName = fileName.substring(0, fileName.lastIndexOf(".") == -1 ? fileName.length(): fileName.lastIndexOf("."));
-            String formatStr = "%-20s %-15s %-15s %-15s";
+            String formatStr = "%-20s %-25s %-15s %-15s";
             long startTime = System.currentTimeMillis();
             try{
                 List<String> command = new ArrayList<>();
-                command.add("sh");
-                command.add("-c");
-                command.add("./" + lexConfigExecName + " < " + src);
+                if(System.getProperty("os.name").equals("Linux")){
+                    command.add("sh");
+                    command.add("-c"); 
+                    command.add("./" + lexConfigExecName + " < " + src);
+                } else{
+                    command.add("cmd");
+                    command.add("/c");
+                    command.add(".\\" + lexConfigExecName + ".exe < " + src);
+                }
                 ProcessBuilder processBuilder= new ProcessBuilder(command);
                 Process ps = processBuilder.start();
                 // System.out.println(command);
@@ -79,32 +86,38 @@ public class LexicalAnalyser {
                 FileWriter fw = new FileWriter(tokenedFile);
                 BufferedWriter writer = new BufferedWriter(fw);
                 while((line = br.readLine()) != null){
-                    String[] tokenInfo = line.split(" +");
-                    System.out.println(line);
-                    //System.out.println(String.format(formatStr, tokenInfo[0], tokenInfo[1], tokenInfo[2], tokenInfo[3]));
-                    // writer.write(String.format(formatStr, tokenInfo[0], tokenInfo[1], tokenInfo[2], tokenInfo[3]));
+                    String[] tokenInfo = line.split("\t+");
+                    // for(int i = 0; i < tokenInfo.length;i++){
+                    //     System.out.println(tokenInfo[i]);
+                    // }
+                    System.out.println(String.format(formatStr, tokenInfo[0], tokenInfo[1], tokenInfo[2], tokenInfo[3]));
+                    writer.write(String.format(formatStr, tokenInfo[0], tokenInfo[1], tokenInfo[2], tokenInfo[3]));
+                    writer.newLine();
                 }
-                writer.flush();
-                writer.close();
-                fw.close();
+                
 
                 BufferedInputStream errorStream = new BufferedInputStream(ps.getErrorStream());
                 BufferedReader ebr = new BufferedReader(new InputStreamReader(errorStream));
                 while((line = ebr.readLine()) != null){
                     System.out.println(line);
+                    writer.write(line);
+                    writer.newLine();
                 }
+
+                writer.flush();
+                writer.close();
+                fw.close();
 
                 
                 ps.waitFor();
-                // br.close();
-                // inputStream.close();
             } catch (Exception e){
-                System.err.println();
+                System.err.println("Analyzing Fails. Due to file system error.");
             }
             
 
             long endTime = System.currentTimeMillis();
             System.out.printf("Lexical Analyzed Source File: " + fileName + " in %d ms.\n", endTime - startTime);
+            System.out.println(seperator);
         }
     }
 
@@ -114,11 +127,13 @@ public class LexicalAnalyser {
             completed = false;
             return;
         }
+        
         if (!compileLexConfig()) {
             System.err.println("Lexical Analyser Quits. Due to lex config compilation error.");
             completed = false;
             return;
         }
+        System.out.println(seperator);
         long startTime = System.currentTimeMillis();
         lexAnalyzer();
         long endTime = System.currentTimeMillis();

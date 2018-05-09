@@ -1,0 +1,10 @@
+ID                   b                         0               0              
+OPERATOR             ASSIGN                    0               2              
+ID                   b                         0               4              
+OPERATOR             ADD                       0               6              
+INTNUMBER            1                         0               7              
+DELIMITER            SEMICOLON                 0               8              
+KEYWORD              int                       1               0              
+ID                   a                         1               4              
+OPERATOR             ASSIGN                    1               6              
+ERROR: Number fromat error. In line 1, position 8.
