@@ -7,9 +7,11 @@ if(b!=2) then{
 }
 real c = 3.1415;
 int d = 6;
-real e = 3.14e-102;
-while(1){
+real e = 3.14e-102;//This is comment.
+while(1) then{
 	if(a<=b+c){
-		b+=c;
+		b=c+b;
+	}else{
+		b=c-b;
 	}
 }

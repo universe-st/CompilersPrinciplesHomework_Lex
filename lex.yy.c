@@ -375,8 +375,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 25
-#define YY_END_OF_BUFFER 26
+#define YY_NUM_RULES 26
+#define YY_END_OF_BUFFER 27
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -386,7 +386,7 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[57] =
     {   0,
-        0,    0,   26,   25,    2,    1,   25,    7,    8,   16,
+        0,    0,   27,   25,    2,    1,   25,    7,    8,   16,
        14,   10,   15,   17,   12,    9,   20,   18,   21,   11,
        11,   11,   11,   11,   11,    5,    6,    2,   24,    3,
         0,   12,    0,   22,   19,   23,   11,   11,    4,   11,
@@ -846,7 +846,7 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 34 "lexicalAnalyzerGenerator.lex"
-{int num_len = yyleng;if(num_len>0 && num_len<=10 && (num_len<10 || strcmp(yytext,"2147483648")<0)){print_message("INTNUMBER",yytext,line_number,line_position);line_position+=yyleng;}else{print_error("Number fromat is error",line_number,line_position);exit(1);}}
+{int num_len = yyleng;if(num_len>0 && num_len<=10 && (num_len<10 || strcmp(yytext,"2147483648")<0)){print_message("INTNUMBER",yytext,line_number,line_position);line_position+=yyleng;}else{print_error("Number fromat error",line_number,line_position);exit(1);}}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
@@ -910,10 +910,15 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 48 "lexicalAnalyzerGenerator.lex"
+#line 47 "lexicalAnalyzerGenerator.lex"
+{char* a=(char*)malloc(sizeof(char)*(20+yyleng));strcpy(a,"Exception character \"");print_error(strcat(strcat(a,yytext),"\""),line_number,line_position);free(a);exit(1);}
+	YY_BREAK
+case 26:
+YY_RULE_SETUP
+#line 49 "lexicalAnalyzerGenerator.lex"
 ECHO;
 	YY_BREAK
-#line 917 "lex.yy.c"
+#line 922 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1914,7 +1919,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 48 "lexicalAnalyzerGenerator.lex"
+#line 49 "lexicalAnalyzerGenerator.lex"
 
 
 
