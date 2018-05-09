@@ -74,15 +74,18 @@ public class LexicalAnalyser {
                 command.add("/c");
                 command.add(".\\" + lexConfigExecName + ".exe < " + src);
             }
-            if (osName.contains("mac os")) {
+            else if (osName.contains("mac os")) {
                 command.add("sh");
                 command.add("-c");
                 command.add("./" + lexConfigExecName + " < " + src);
             }
-            if (osName.contains("linux")) {
+            else if (osName.contains("linux")) {
                 command.add("sh");
                 command.add("-c");
                 command.add("./" + lexConfigExecName + " < " + src);
+            }
+            else{
+                throw new Exception("Unsupported Operating System.");
             }
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process ps = processBuilder.start();
