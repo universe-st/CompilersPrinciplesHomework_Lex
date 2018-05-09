@@ -31,7 +31,7 @@ keyword int|real|if|then|else|while
 ";" {print_message("DELIMITER","SEMICOLON",line_number,line_position);line_position+=yyleng;}
 "," {print_message("DELIMITER","COMMA",line_number,line_position);line_position+=yyleng;}
 {id} {print_message("ID",yytext,line_number,line_position);line_position+=yyleng;}
-{intnumber} {int num_len = yyleng;if(num_len>0 && num_len<=10 && (num_len<10 || strcmp(yytext,"2147483648")<0)){print_message("INTNUMBER",yytext,line_number,line_position);line_position+=yyleng;}else{print_error("Number fromat error",line_number,line_position);exit(1);}}
+{intnumber} {int num_len = yyleng;if(num_len>0 && num_len<=10 && (num_len<10 || strcmp(yytext,"2147483648")<0)){print_message("INTNUMBER",yytext,line_number,line_position);line_position+=yyleng;}else{print_error("Number format error",line_number,line_position);exit(1);}}
 {realnumber} {char* p = strchr(yytext,'e');if(p==NULL)p=strchr(yytext,'E');if(p!=NULL){int ex = atoi(1+p);if(ex>128||ex<-128){print_error("Absolute value of exponent must not more than 128",line_number,line_position);exit(1);}}print_message("REAL_NUMBER",yytext,line_number,line_position);line_position+=yyleng;} 
 "+" {print_message("OPERATOR","ADD",line_number,line_position);line_position+=yyleng;}
 "-" {print_message("OPERATOR","SUB",line_number,line_position);line_position+=yyleng;}

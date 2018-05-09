@@ -846,7 +846,7 @@ YY_RULE_SETUP
 case 12:
 YY_RULE_SETUP
 #line 34 "lexicalAnalyzerGenerator.lex"
-{int num_len = yyleng;if(num_len>0 && num_len<=10 && (num_len<10 || strcmp(yytext,"2147483648")<0)){print_message("INTNUMBER",yytext,line_number,line_position);line_position+=yyleng;}else{print_error("Number fromat error",line_number,line_position);exit(1);}}
+{int num_len = yyleng;if(num_len>0 && num_len<=10 && (num_len<10 || strcmp(yytext,"2147483648")<0)){print_message("INTNUMBER",yytext,line_number,line_position);line_position+=yyleng;}else{print_error("Number format error",line_number,line_position);exit(1);}}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
