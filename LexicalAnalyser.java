@@ -68,14 +68,21 @@ public class LexicalAnalyser {
         long startTime = System.currentTimeMillis();
         try {
             List<String> command = new ArrayList<>();
-            if (System.getProperty("os.name").equals("Linux")) {
-                command.add("sh");
-                command.add("-c");
-                command.add("./" + lexConfigExecName + " < " + src);
-            } else {
+            String osName = System.getProperty("os.name").toLowerCase();
+            if (osName.contains("windows")) {
                 command.add("cmd");
                 command.add("/c");
                 command.add(".\\" + lexConfigExecName + ".exe < " + src);
+            }
+            if (osName.contains("mac os")) {
+                command.add("sh");
+                command.add("-c");
+                command.add("./" + lexConfigExecName + " < " + src);
+            }
+            if (osName.contains("linux")) {
+                command.add("sh");
+                command.add("-c");
+                command.add("./" + lexConfigExecName + " < " + src);
             }
             ProcessBuilder processBuilder = new ProcessBuilder(command);
             Process ps = processBuilder.start();
@@ -141,12 +148,12 @@ public class LexicalAnalyser {
         List<List<Token>> ret = new ArrayList<>();
         long startTime = System.currentTimeMillis();
         for (String filePath : filePaths) {
-            try{
+            try {
                 ret.add(lexAnalyzer(filePath));
-            } catch(Exception e){
+            } catch (Exception e) {
                 System.err.println(e.getMessage());
             }
-            
+
         }
         long endTime = System.currentTimeMillis();
         System.out.printf("Total Analyzing Time: %d ms.\n", endTime - startTime);
